@@ -27,7 +27,7 @@ class bencurl
         return curl_exec($this->ch);
     }
 
-    public function getrawheaders()
+    public function getRawHeaders()
     {
         curl_setopt($this->ch, CURLOPT_NOBODY, true);
         curl_setopt($this->ch, CURLOPT_HEADER, 1);
@@ -35,13 +35,24 @@ class bencurl
     }
 
 
-    public function getarrayofrawheaders()
+    public function getArrayOfRawHeaders()
     {
-        preg_match_all('!(?<=\n\r\n|^)(.+?)(?=\n\r)!s', $this->getrawheaders(), $m);
-
+        preg_match_all('!(?<=\n\r\n|^)(.+?)(?=\n\r)!s', $this->getRawHeaders(), $m);
         return $m[1];
     }
 
+    public function getArrayOfArrayOfHeaders()
+    {
+        return array_map(function ($headers) {
+            preg_match_all('!(?<=\n|^)(.+?)(?=\n|$)!s', $headers, $m);
+            return $m[1];
+        }, $this->getArrayOfRawHeaders());
+    }
+
+    public function Headers()
+    {
+       return $this->getArrayOfArrayOfHeaders();
+    }
 
     public static function fixencode($inp)
     {
@@ -52,10 +63,10 @@ class bencurl
 }
 
 
-$x = new bencurl("https://b2n.ir/testbencurl");
+$x = new bencurl("https://google.com");
 
 
-print_r($x->getarrayofrawheaders());
 
-#preg_match_all('!(?<=\n\r\n|^)(.+?)(?=\n\r)!s', $x->getrawheaders(), $m);
-#print_r($m[1][1]);
+print_r($x->Headers());
+#preg_match_all('!(?<=\n|^)(.+?)(?=\n|$)!s', $x->getarrayofrawheaders()[0], $m);
+#echo ($m[1][1]);
