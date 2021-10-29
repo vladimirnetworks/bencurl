@@ -22,18 +22,25 @@ class bencurl
         curl_setopt($this->ch, CURLOPT_USERAGENT, $userAgent);
     }
 
-    protected function getit() {
+    protected function getit()
+    {
         return curl_exec($this->ch);
     }
 
-    public function getinfo()
+    public function getrawheaders()
     {
         curl_setopt($this->ch, CURLOPT_NOBODY, true);
         curl_setopt($this->ch, CURLOPT_HEADER, 1);
         return $this->getit();
-
     }
 
+
+    public function getarrayofrawheaders()
+    {
+        preg_match_all('!(?<=\n\r\n|^)(.+?)(?=\n\r)!s', $this->getrawheaders(), $m);
+
+        return $m[1];
+    }
 
 
     public static function fixencode($inp)
@@ -45,6 +52,10 @@ class bencurl
 }
 
 
-$x = new bencurl("https://www.google.com");
+$x = new bencurl("https://b2n.ir/testbencurl");
 
-echo $x->getinfo();
+
+print_r($x->getarrayofrawheaders());
+
+#preg_match_all('!(?<=\n\r\n|^)(.+?)(?=\n\r)!s', $x->getrawheaders(), $m);
+#print_r($m[1][1]);
