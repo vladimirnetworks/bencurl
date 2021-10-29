@@ -27,6 +27,12 @@ class bencurl
         return curl_exec($this->ch);
     }
 
+    
+    public function fileSize()
+    {
+        return curl_getinfo($this->ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
+    }
+
     public function getRawHeaders()
     {
         curl_setopt($this->ch, CURLOPT_NOBODY, true);
@@ -34,6 +40,18 @@ class bencurl
         return $this->getit();
     }
 
+    public function download($filename=null)
+    {
+      
+        curl_setopt($this->ch, CURLOPT_NOBODY, false);
+        curl_setopt($this->ch, CURLOPT_HEADER, 0);
+
+        if ($filename) {
+        curl_setopt($this->ch, CURLOPT_FILE, fopen ($filename, 'w+')); 
+        }
+        return $this->getit();
+
+    }
 
     public function getArrayOfRawHeaders()
     {
@@ -54,6 +72,8 @@ class bencurl
        return $this->getArrayOfArrayOfHeaders();
     }
 
+
+
     public static function fixencode($inp)
     {
         return  preg_replace_callback("![^[:ascii:]]!", function ($i) {
@@ -63,10 +83,3 @@ class bencurl
 }
 
 
-$x = new bencurl("https://google.com");
-
-
-
-print_r($x->Headers());
-#preg_match_all('!(?<=\n|^)(.+?)(?=\n|$)!s', $x->getarrayofrawheaders()[0], $m);
-#echo ($m[1][1]);
