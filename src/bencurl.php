@@ -1,5 +1,5 @@
 <?php
-
+namespace vladimirnetworks\curl
 class bencurl
 {
 
