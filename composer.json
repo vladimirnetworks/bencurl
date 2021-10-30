@@ -1,0 +1,19 @@
+{
+    "name": "vladimirnetworks/bencurl",
+    "description": "fast and lite curl for php",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "vladimirnetworks\\curl\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "vladimirnetworks",
+            "email": "vladimirnetworks@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
