@@ -1,6 +1,8 @@
 <?php
-namespace vladimirnetworks\curl
+namespace vladimirnetworks\curl;
+
 class bencurl
+
 {
 
     public $url;
@@ -38,7 +40,7 @@ class bencurl
     
     public function fileSize()
     {
-        return curl_getinfo(CURLINFO_CONTENT_LENGTH_DOWNLOAD);
+        return curl_getinfo($this->ch,CURLINFO_CONTENT_LENGTH_DOWNLOAD);
     }
 
     public function getRawHeaders()
