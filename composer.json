@@ -15,5 +15,6 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {"php": ">=5.3.0"}
+    "require": {"php": ">=5.3.0",
+        "campo/random-user-agent": "dev-master"}
 }

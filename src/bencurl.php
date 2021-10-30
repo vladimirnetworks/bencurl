@@ -1,6 +1,6 @@
 <?php
 namespace vladimirnetworks\curl;
-
+use Campo\UserAgent;
 class bencurl
 
 {
@@ -16,6 +16,8 @@ class bencurl
 
     function __construct($u)
     {
+    
+        
         $this->url = $this::fixencode($u);
         $this->ch = curl_init();
         $this->bencurl_setopt(CURLOPT_URL, $this->url);
@@ -25,8 +27,7 @@ class bencurl
         $this->bencurl_setopt(CURLOPT_SSL_VERIFYPEER, 0);
         $this->bencurl_setopt(CURLOPT_CONNECTTIMEOUT, 5);
         $this->bencurl_setopt(CURLOPT_TIMEOUT, 7);
-        #$userAgent =  UserAgent::random(['os_type' => "Windows", 'device_type' => "Desktop"]);
-        $userAgent = 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.152 Safari/537.36';
+        $userAgent =  UserAgent::random(['os_type' => "Windows", 'device_type' => "Desktop"]);
         $this->bencurl_setopt(CURLOPT_USERAGENT, $userAgent);
     }
 
