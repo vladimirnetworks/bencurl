@@ -33,6 +33,14 @@ class bencurl
 
 
 
+    public function post($data)
+    {       
+        $this->bencurl_setopt(CURLOPT_POST, 1);
+        $this->bencurl_setopt(CURLOPT_POSTFIELDS, $data);
+    }
+
+
+
     protected function getit()
     {
         return curl_exec($this->ch);
